@@ -4,7 +4,7 @@
 基于上游 2.99.0.1，恢复 Minecraft 原版下载、自动安装、版本组件修改及整合包安装入口。
 原作者：龙腾猫跃；[赞助原作者](https://meloong.com/afd/a/LTCat)。
 
-使用与构建说明见 [RESTORED.md](RESTORED.md)。安装 .NET 9 SDK 后，在 Windows PowerShell 7 中执行 `./build.ps1`，打包结果在 `dist/`。
+使用与构建说明见 [RESTORED.md](RESTORED.md)。r2 新增微软登录应用配置与缺失参数检查，申请说明见 [MICROSOFT-LOGIN.md](MICROSOFT-LOGIN.md)。安装 .NET 9 SDK 后，在 Windows PowerShell 7 中执行 `./build.ps1`，打包结果在 `dist/`。
 也可以从本仓库 Actions 的 “Build download restored edition” 下载构建产物。
 仓库保留的 `最新正式版.zip` 是上游原版，**不是本修改版的构建产物**。
 

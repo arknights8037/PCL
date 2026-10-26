@@ -457,7 +457,7 @@ Public Class FormMain
             Telemetry("启动")
             '开源版本提示
             If VersionBranchMain = "OpenSource" Then
-                MyMsgBox($"PCL 下载恢复修改版是第三方基于 PCL 独立进行二次创作的产物，已恢复 Minecraft 下载功能。{vbCrLf}{vbCrLf}以下功能仍需自行配置或暂不可用：{vbCrLf}- CurseForge：需自行申请 API Key，设置环境变量 PCL_CURSEFORGE_API_KEY{vbCrLf}- 微软正版登录：需自行申请 Client ID，设置环境变量 PCL_MS_CLIENT_ID{vbCrLf}- 官方更新与联网通知、主题切换、百宝箱{vbCrLf}{vbCrLf}原作者：龙腾猫跃；赞助：https://meloong.com/afd/a/LTCat{vbCrLf}修改版源码：https://github.com/arknights8037/PCL", "PCL 下载恢复修改版说明")
+                MyMsgBox($"PCL 下载恢复修改版是第三方基于 PCL 独立进行二次创作的产物，已恢复 Minecraft 下载功能。{vbCrLf}{vbCrLf}以下功能仍需自行配置或暂不可用：{vbCrLf}- CurseForge：需自行申请 API Key，设置环境变量 PCL_CURSEFORGE_API_KEY{vbCrLf}- 微软正版登录：需自行申请 Client ID，在【启动 → 正版 → 登录应用设置】中填写，支持环境变量 PCL_MS_CLIENT_ID{vbCrLf}- 官方更新与联网通知、主题切换、百宝箱{vbCrLf}{vbCrLf}原作者：龙腾猫跃；赞助：https://meloong.com/afd/a/LTCat{vbCrLf}修改版源码：https://github.com/arknights8037/PCL", "PCL 下载恢复修改版说明")
             End If
         End Sub, "初始化", ThreadPriority.Lowest)
 

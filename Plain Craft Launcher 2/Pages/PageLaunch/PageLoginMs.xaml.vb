@@ -65,8 +65,10 @@ Public Class PageLoginMs
     End Function
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
+        If ValidateOAuthClientId(OAuthClientId) <> "" AndAlso Not ConfigureClientId() Then Return
         ComboAccounts.IsEnabled = False
         BtnLogin.IsEnabled = False
+        BtnClientId.IsEnabled = False
         BtnLogin.Text = "0%"
         RunInNewThread(
         Sub()
@@ -99,10 +101,32 @@ Public Class PageLoginMs
                 Sub()
                     ComboAccounts.IsEnabled = True
                     BtnLogin.IsEnabled = True
+                    BtnClientId.IsEnabled = True
                     BtnLogin.Text = "登录"
                 End Sub)
             End Try
         End Sub, "Ms Login")
     End Sub
+
+    Private Sub BtnClientId_Click(sender As Object, e As EventArgs) Handles BtnClientId.Click
+        If McLoginMsLoader.State = LoadState.Loading Then
+            Hint("请先完成或取消当前登录，再修改登录应用。")
+            Return
+        End If
+        ConfigureClientId()
+    End Sub
+
+    Private Function ConfigureClientId() As Boolean
+        Dim Value = MyMsgBoxInput("微软登录应用设置",
+            "本修改版未内置微软登录应用 ID。请填写为本修改版注册的应用程序（客户端）ID，不是微软账号或密码。" & vbCrLf &
+            "需要支持个人微软账号并启用公共客户端流。获取步骤见【如何获取应用 ID】。" & vbCrLf &
+            "更换应用 ID 后，旧应用的账号需要重新添加。设置保存后立即生效。",
+            OAuthClientId, New ObjectModel.Collection(Of Validate) From {New ValidateFunc(AddressOf ValidateOAuthClientId)},
+            HintText:="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", Button1:="保存")
+        If Value Is Nothing Then Return False
+        Settings.Set("LoginMsClientId", Guid.Parse(Value.Trim()).ToString("D"))
+        Hint("微软登录应用 ID 已保存。", HintType.Green)
+        Return True
+    End Function
 
 End Class

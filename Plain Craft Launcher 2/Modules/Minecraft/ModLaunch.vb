@@ -881,15 +881,18 @@ LoginFinish:
     '微软登录步骤 1，原始登录：获取 DeviceCode 并开启登录网页
     Private Function MsLoginStep1New(Data As LoaderTask(Of McLoginMs, McLoginResult)) As (OAuthAccessToken As String, OAuthRefreshToken As String)
         '参考：https://learn.microsoft.com/zh-cn/entra/identity-platform/v2-oauth2-device-code
+        Dim ClientId = RequireOAuthClientId()
 
         '初始请求
 Retry:
         McLaunchLog("开始微软登录步骤 1/6（原始登录）")
         Dim PrepareJson As JObject = NetRequestByClientRetry("https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode", HttpMethod.Post,
-            Content:=$"client_id={OAuthClientId}&tenant=/consumers&scope=XboxLive.signin%20offline_access",
+            Content:=$"client_id={StringUtils.FormUrlEscape(ClientId)}&scope=XboxLive.signin%20offline_access",
             ContentType:="application/x-www-form-urlencoded", RequireJson:=True).DeserializeJson()
         McLaunchLog("网页登录地址：" & PrepareJson("verification_uri").ToString)
 
+        '设备码与申请它的应用 ID 绑定，轮询期间不能切换应用。
+        PrepareJson("pcl_client_id") = ClientId
         '弹窗
         Dim Converter As New MyMsgBoxConverter With {.Content = PrepareJson, .ForceWait = True, .Type = MyMsgBoxType.Login}
         WaitingMyMsgBox.Enqueue(Converter)
@@ -912,12 +915,13 @@ Retry:
     End Function
     '微软登录步骤 1，刷新登录：从 OAuth Code 或 OAuth RefreshToken 获取 {OAuth AccessToken, OAuth RefreshToken}
     Private Function MsLoginStep1Refresh(Code As String) As (OAuthAccessToken As String, OAuthRefreshToken As String)
+        Dim ClientId = RequireOAuthClientId()
         McLaunchLog("开始微软登录步骤 1/6（刷新登录）")
 
         Dim Result As String
         Try
             Result = NetRequestByClientMultiple("https://login.live.com/oauth20_token.srf", HttpMethod.Post,
-                Content:=$"client_id={OAuthClientId}&refresh_token={StringUtils.FormUrlEscape(Code)}&grant_type=refresh_token&scope=XboxLive.signin%20offline_access",
+                Content:=$"client_id={StringUtils.FormUrlEscape(ClientId)}&refresh_token={StringUtils.FormUrlEscape(Code)}&grant_type=refresh_token&scope=XboxLive.signin%20offline_access",
                 ContentType:="application/x-www-form-urlencoded",
                 Headers:={{"Accept-Language", "en-US,en;q=0.5"}, {"X-Requested-With", "XMLHttpRequest"}},
                 ThreadCount:=2)

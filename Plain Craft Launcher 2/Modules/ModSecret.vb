@@ -6,8 +6,27 @@ Friend Module ModSecret
     Public Const VersionBranchMain As String = "OpenSource"
     '在开源版的注册表与常规版的注册表隔离，以防数据冲突
     Public Const RegFolder As String = "PCLDebug"
-    '用于微软登录的 ClientId
-    Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "")
+    '界面中保存的应用 ID 优先，环境变量作为兼容入口。客户端 ID 是公开标识，不是密码。
+    Public ReadOnly Property OAuthClientId As String
+        Get
+            Dim Saved = Settings.Get(Of String)("LoginMsClientId").Trim()
+            Return If(Saved <> "", Saved, If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "").Trim())
+        End Get
+    End Property
+
+    Public Function ValidateOAuthClientId(Value As String) As String
+        If String.IsNullOrWhiteSpace(Value) Then Return "尚未配置微软登录应用 ID。请在【启动 → 正版 → 登录应用设置】中填写应用程序（客户端）ID。"
+        Dim Parsed As Guid
+        If Not Guid.TryParse(Value.Trim(), Parsed) OrElse Parsed = Guid.Empty Then Return "微软登录应用 ID 必须是有效的 GUID，请填写应用程序（客户端）ID，而非账号、密码或客户端密码。"
+        Return ""
+    End Function
+
+    Public Function RequireOAuthClientId() As String
+        Dim Value = OAuthClientId
+        Dim Validation = ValidateOAuthClientId(Value)
+        If Validation <> "" Then Throw New Exception("$" & Validation)
+        Return Guid.Parse(Value).ToString("D")
+    End Function
     'CurseForge API Key
     Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "")
     '用于匿名数据收集的腾讯云日志服务上报 URL，形如 https://{region}.cls.tencentcs.com/track?topic_id={topic_id}

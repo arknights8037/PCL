@@ -17,7 +17,7 @@
 同时恢复版本选择页的安装入口、版本组件修改、整合包安装入口及 Minecraft 更新提示中的下载入口。
 下载仍使用上游 Mojang / BMCLAPI 下载与校验逻辑，网络连接情况会影响下载速度与可用性。
 
-微软正版登录需要自行向微软申请 Client ID，并在启动程序前设置环境变量 `PCL_MS_CLIENT_ID`。
+微软正版登录需要自行向微软申请 Client ID，在“启动 → 正版 → 登录应用设置”中填写；也兼容环境变量 `PCL_MS_CLIENT_ID`。申请条件与步骤见同目录 `微软登录配置.md`（仓库文档为 `MICROSOFT-LOGIN.md`）。
 CurseForge 需要自行申请 API Key，并在启动程序前设置环境变量 `PCL_CURSEFORGE_API_KEY`。
 没有这些密钥仍可使用 Minecraft 原版下载；官方更新、联网通知、主题切换与百宝箱仍保留源码版本原有的限制。
 Minecraft 的账号登录、购买与游戏使用许可需要由使用者自行满足。
@@ -34,5 +34,5 @@ cd PCL
 
 也可以指定 SDK 的完整路径：`./build.ps1 -Dotnet F:/PCL-SDK/dotnet.exe`。
 首次构建需要联网还原 NuGet 包。旧式 VB WPF 工程已迁移为 SDK 格式，运行目标仍为 .NET Framework 4.8。
-输出位于 `dist/PCL-Download-Restored-2.99.0.1-win64.zip`，包含使用说明、原许可、构建提交与 SHA-256 校验清单。
+输出位于 `dist/PCL-Download-Restored-2.99.0.1-r2-win64.zip`，包含使用说明、原许可、构建提交与 SHA-256 校验清单。
 重复打包前请先移动已有的同名产物文件夹和 ZIP。

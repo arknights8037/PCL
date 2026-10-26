@@ -6,7 +6,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Submodule initialization failed.' }
 & $Dotnet build 'Plain Craft Launcher 2.sln' -c Release -v minimal
 if ($LASTEXITCODE -ne 0) { throw 'Build failed.' }
 
-$packageName = 'PCL-Download-Restored-2.99.0.1'
+$packageName = 'PCL-Download-Restored-2.99.0.1-r2'
 $packageDir = Join-Path $PSScriptRoot ('dist/' + $packageName)
 if (Test-Path $packageDir) { throw "Package directory already exists: $packageDir. Move it before rebuilding." }
 New-Item -ItemType Directory -Path $packageDir -Force | Out-Null
@@ -17,6 +17,7 @@ Get-ChildItem -LiteralPath $buildDir -Filter '*.dll' | Copy-Item -Destination $p
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'LICENCE') -Destination $packageDir
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'RESTORED.md') -Destination (Join-Path $packageDir '使用说明.md')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'VALIDATION.md') -Destination (Join-Path $packageDir '验证记录.md')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'MICROSOFT-LOGIN.md') -Destination (Join-Path $packageDir '微软登录配置.md')
 $commit = & git rev-parse HEAD
 $coreCommit = & git -C MeloongCore rev-parse HEAD
 @("Source: https://github.com/arknights8037/PCL", "Commit: $commit", "MeloongCore: $coreCommit", 'Configuration: Release / net48') | Set-Content -LiteralPath (Join-Path $packageDir 'BUILD.txt') -Encoding UTF8
