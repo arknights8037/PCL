@@ -457,7 +457,7 @@ Public Class FormMain
             Telemetry("启动")
             '开源版本提示
             If VersionBranchMain = "OpenSource" Then
-                MyMsgBox($"该版本中无法使用以下特性：{vbCrLf}- CurseForge API 调用：需要自行申请 API Key，然后添加到 ModSecret.vb 的开头{vbCrLf}- 正版登录：需要自行向微软申请 Client ID，然后添加到 ModSecret.vb 的开头{vbCrLf}- 更新与联网通知：避免滥用隐患{vbCrLf}- 主题切换：这是需要赞助解锁的纪念性质的功能，别让赞助者太伤心啦……{vbCrLf}- 百宝箱：开发早期往里面塞了些开发工具，整理起来太麻烦了……", "开源版本说明")
+                MyMsgBox($"PCL 下载恢复修改版是第三方基于 PCL 独立进行二次创作的产物，已恢复 Minecraft 下载功能。{vbCrLf}{vbCrLf}以下功能仍需自行配置或暂不可用：{vbCrLf}- CurseForge：需自行申请 API Key，设置环境变量 PCL_CURSEFORGE_API_KEY{vbCrLf}- 微软正版登录：需自行申请 Client ID，设置环境变量 PCL_MS_CLIENT_ID{vbCrLf}- 官方更新与联网通知、主题切换、百宝箱{vbCrLf}{vbCrLf}原作者：龙腾猫跃；赞助：https://meloong.com/afd/a/LTCat{vbCrLf}修改版源码：https://github.com/arknights8037/PCL", "PCL 下载恢复修改版说明")
             End If
         End Sub, "初始化", ThreadPriority.Lowest)
 

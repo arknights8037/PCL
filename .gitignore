@@ -342,3 +342,7 @@ ASALocalRun/
 healthchecksdb
 
 MaskFiles/
+
+# Local toolchain and packaged distributions
+.tools/
+dist/

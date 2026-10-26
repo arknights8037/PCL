@@ -1,0 +1,22 @@
+name: Build download restored edition
+on:
+  workflow_dispatch:
+  push:
+    branches: [download-restored]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build and package
+        shell: pwsh
+        run: ./build.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PCL-Download-Restored-win64
+          path: dist/*-win64.zip

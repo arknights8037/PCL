@@ -20,7 +20,7 @@
                     </Grid.ColumnDefinitions>
                     <local:MyListItem IsHitTestVisible="False" Title="龙腾猫跃" Margin="-5,0,15,0" Info="Plain Craft Launcher 的开发者！" Grid.Row="0" Grid.Column="1" />
                     <local:MyListItem IsHitTestVisible="False" Title="HerobrineXia" Margin="-5,0,15,0" Info="Plain Craft Launcher 的协力开发者！" Grid.Row="1" Grid.Column="1" />
-                    <local:MyListItem IsHitTestVisible="False" Title="Plain Craft Launcher 2" Margin="-5,0,15,0" Info="当前版本：%VERSION%（%VERSIONCODE%.%BRANCH%）" Grid.Row="2" Grid.Column="1" x:Name="ItemAboutPcl" />
+                    <local:MyListItem IsHitTestVisible="False" Title="PCL 下载恢复修改版" Margin="-5,0,15,0" Info="当前版本：%VERSION%（%VERSIONCODE%.%BRANCH%）" Grid.Row="2" Grid.Column="1" x:Name="ItemAboutPcl" />
                     <Image Source="/Plain Craft Launcher 2;component/Images/Heads/LTCat.jpg" Grid.Row="0" Margin="3">
                         <Image.Clip>
                             <EllipseGeometry Center="17 17" RadiusX="17" RadiusY="17" />
@@ -41,6 +41,12 @@
                     <local:MyButton Text="检查更新" Grid.Column="2" Grid.Row="2" Height="35" 
                                     x:Name="BtnAboutUpdate" />
                 </Grid>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="第三方修改说明">
+                <StackPanel Margin="25,40,25,20">
+                    <TextBlock Text="本版本是第三方基于 PCL 独立进行二次创作的产物，由 arknights8037 维护。基于上游 2.99.0.1，恢复 Minecraft 自动安装、组件修改及整合包安装入口。" TextWrapping="Wrap" Margin="0,0,0,12" />
+                    <local:MyButton Text="查看修改版源码" HorizontalAlignment="Left" Width="160" Height="35" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/arknights8037/PCL" />
+                </StackPanel>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="特别鸣谢">
                 <Grid Margin="21,40,21,16">
